@@ -177,3 +177,14 @@ class RaydiumSwap {
     
         return { versionedTransaction, recentBlockhashForSwap };
       }
+
+      getTokenAccountByOwnerAndMint(mint: PublicKey) {
+        return {
+          programId: TOKEN_PROGRAM_ID,
+          pubkey: PublicKey.default,
+          accountInfo: {
+            mint: mint,
+            amount: 0,
+          },
+        }
+      }
