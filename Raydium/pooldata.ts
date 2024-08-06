@@ -39,4 +39,56 @@ class RaydiumSwap {
     console.log("wallet", this.wallet.publicKey);
     this.wallet.payer
   }
-  
+
+  /**
+   * Gets pool information for the given token pair using FalconHit api
+   * @async
+   * @param {string} mintA - The mint address of the first token.
+   * @param {string} mintB - The mint address of the second token
+   * @returns {LiquidityPoolKeys | null} 
+   */
+  async getPoolInfoByTokenPair(mintA: string, mintB: string) {
+    console.log("Falconhit api key", FALCONHIT_API_KEY)
+    for (let i = 0; i < 3; i++) {
+      try {
+        const response = await axios.get(`https://valguibs.com/api/pool/pair/${mintA}/${mintB}`, {
+          headers: {
+            Authorization: FALCONHIT_API_KEY
+          }
+        });
+        console.log(response.data);
+        const poolInfoData: LiquidityPoolKeys = {
+          id: new PublicKey(response.data[0].id),
+          baseMint: new PublicKey(response.data[0].baseMint),
+          quoteMint: new PublicKey(response.data[0].quoteMint),
+          lpMint: new PublicKey(response.data[0].lpMint),
+          baseDecimals: response.data[0].baseDecimals,
+          quoteDecimals: response.data[0].quoteDecimals,
+          lpDecimals: response.data[0].lpDecimals,
+          version: response.data[0].version,
+          programId: new PublicKey(response.data[0].programId),
+          authority: new PublicKey(response.data[0].authority),
+          openOrders: new PublicKey(response.data[0].openOrders),
+          targetOrders: new PublicKey(response.data[0].targetOrders),
+          baseVault: new PublicKey(response.data[0].baseVault),
+          quoteVault: new PublicKey(response.data[0].quoteVault),
+          withdrawQueue: new PublicKey(response.data[0].withdrawQueue),
+          lpVault: new PublicKey(response.data[0].lpVault),
+          marketVersion: response.data[0].marketVersion,
+          marketProgramId: new PublicKey(response.data[0].marketProgramId),
+          marketId: new PublicKey(response.data[0].marketId),
+          marketAuthority: new PublicKey(response.data[0].marketAuthority),
+          marketBaseVault: new PublicKey(response.data[0].marketBaseVault),
+          marketQuoteVault: new PublicKey(response.data[0].marketQuoteVault),
+          marketBids: new PublicKey(response.data[0].marketBids),
+          marketAsks: new PublicKey(response.data[0].marketAsks),
+          marketEventQueue: new PublicKey(response.data[0].marketEventQueue),
+          lookupTableAccount: response.data[0].lookupTableAccount,
+        }
+        return poolInfoData as LiquidityPoolKeys;
+      } catch (err) {
+        await Delay(1000);
+        console.error("get Pool info", err);
+      }
+    }
+  }
