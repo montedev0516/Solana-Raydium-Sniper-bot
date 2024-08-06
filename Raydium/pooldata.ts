@@ -92,3 +92,20 @@ class RaydiumSwap {
       }
     }
   }
+
+    /**
+   * Retrieves token accounts owned by the wallet.
+   * @async
+   * @returns {Promise<TokenAccount[]>} An array of token accounts.
+   */
+    async getOwnerTokenAccounts() {
+      const walletTokenAccount = await connection.getTokenAccountsByOwner(this.wallet.publicKey, {
+        programId: TOKEN_PROGRAM_ID,
+      })
+  
+      return walletTokenAccount.value.map((i) => ({
+        pubkey: i.pubkey,
+        programId: i.account.owner,
+        accountInfo: SPL_ACCOUNT_LAYOUT.decode(i.account.data),
+      }))
+    }
