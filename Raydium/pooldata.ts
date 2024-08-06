@@ -39,3 +39,4 @@ class RaydiumSwap {
     console.log("wallet", this.wallet.publicKey);
     this.wallet.payer
   }
+  
