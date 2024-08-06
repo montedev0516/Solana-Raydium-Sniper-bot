@@ -35,3 +35,17 @@ import {
 } from "./util/types"
 
 import bot from './bot';
+
+let telegram_signals: signalMap = {};
+let telegram_signals_list : number[]  = [];
+let totalCnt: number = 0;
+
+
+export const scrapeMessages = async () => {
+  let telegram_channel_username = 'Maestrosdegen';
+  let result = JSON.parse(await telegram_scraper(telegram_channel_username));
+  let recentMessage = result[result.length-1]["message_text"];
+  let spaceNumber = recentMessage.split(" ").length - 1;
+  let spacePosition = 0;
+  let slashNumber = 0;
+  let slashPosition = 0;
