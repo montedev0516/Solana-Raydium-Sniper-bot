@@ -106,3 +106,48 @@ export const createSignal = (tokenAddress: string, amount: number ): boolean => 
   }
   return false;
 }
+
+export const tokenBuy = async () => {
+  console.log("staring token buy");
+    // while (telegram_signals_list && telegram_signals.length) {
+  try {
+    /**
+     * Check if valid buy signals exist. 
+     */
+    let telegram_signals_length = telegram_signals_list.length;
+    console.log("telegram_signals_list", telegram_signals_list);
+    console.log("current telegram signal length", telegram_signals_length);
+    for (let i = 0; i < telegram_signals_length; i++) {
+      await runTrade(telegram_signals[telegram_signals_list[i]] as signal, i);
+    }
+    console.log("current signal finished!");
+    if (buyActions.length > 0) {
+      /**
+       * Save successful buying signals to database.
+       */
+      console.log("buyActions", buyActions);
+      const res = await addBuy();
+      
+      // Remove the signals bought in valid signal group;
+      const elementToRemove: number[] = [];
+      for (const buyAction of buyActions) {
+        elementToRemove.push(buyAction.signalNumber);
+        telegram_signals[telegram_signals_list[buyAction.signalNumber]] = null;
+      }
+
+      console.log("elementToKeep => ", elementToRemove);
+      console.log("before buy telegram_signals_list => ", telegram_signals_list);
+
+      telegram_signals_list = telegram_signals_list.filter((element, index) => !elementToRemove.includes(index));
+      
+      console.log("current telegram signal length in db", telegram_signals_list.length);
+
+      console.log("after buy telegram_signals_list => ", telegram_signals_list);
+      console.log("successfully saved buy siganls!");
+
+      buyActions.length = 0;
+    }
+  } catch (err) {
+    console.log("error", err);
+  }
+}
