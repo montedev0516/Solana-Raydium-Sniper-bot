@@ -188,3 +188,14 @@ class RaydiumSwap {
           },
         }
       }
+
+          /**
+   * Calculates the amount out for a swap.
+   * @async
+   * @param {LiquidityPoolKeys} poolKeys - The liquidity pool keys.
+   * @param {number} rawAmountIn - The raw amount of the input token.
+   * @param {boolean} swapInDirection - The direction of the swap (true for in, false for out).
+   * @returns {Promise<Object>} The swap calculation result.
+   */
+
+          
