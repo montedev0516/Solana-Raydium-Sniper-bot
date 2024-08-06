@@ -160,3 +160,20 @@ class RaydiumSwap {
         const instructions: TransactionInstruction[] = swapTransaction.innerTransactions[0].instructions.filter(Boolean)
         return instructions as TransactionInstruction[]
       }
+
+      async createVersionedTransaction(instructions: TransactionInstruction[]) {
+
+        const recentBlockhashForSwap = await connection.getLatestBlockhash()
+        
+        const versionedTransaction = new VersionedTransaction(
+          new TransactionMessage({
+            payerKey: this.wallet.publicKey,
+            instructions: instructions,
+            recentBlockhash: recentBlockhashForSwap.blockhash,
+          }).compileToV0Message()
+        )
+    
+        versionedTransaction.sign([this.wallet.payer])
+    
+        return { versionedTransaction, recentBlockhashForSwap };
+      }
