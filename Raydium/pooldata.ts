@@ -236,3 +236,5 @@ class RaydiumSwap {
             }
           }
         }
+
+        export  default RaydiumSwap;
