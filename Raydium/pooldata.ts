@@ -212,3 +212,27 @@ class RaydiumSwap {
               currencyOutMint = poolKeys.baseMint
               currencyOutDecimals = poolInfo.baseDecimals
             }
+            const currencyIn = new Token(TOKEN_PROGRAM_ID, currencyInMint, currencyInDecimals)
+            const amountIn = new TokenAmount(currencyIn, rawAmountIn, false)
+            const currencyOut = new Token(TOKEN_PROGRAM_ID, currencyOutMint, currencyOutDecimals)
+            const slippage = new Percent(1000, 10_000) // 20% slippage
+        
+            const { amountOut, minAmountOut, currentPrice, executionPrice, priceImpact, fee } = Liquidity.computeAmountOut({
+              poolKeys,
+              poolInfo,
+              amountIn,
+              currencyOut,
+              slippage,
+            })
+        
+            return {
+              amountIn,
+              amountOut,
+              minAmountOut,
+              currentPrice,
+              executionPrice,
+              priceImpact,
+              fee,
+            }
+          }
+        }
