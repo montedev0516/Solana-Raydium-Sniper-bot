@@ -198,4 +198,17 @@ class RaydiumSwap {
    * @returns {Promise<Object>} The swap calculation result.
    */
 
-          
+          async calcAmountOut(poolKeys: LiquidityPoolKeys, rawAmountIn: number, swapInDirection: boolean) {
+            const poolInfo = await Liquidity.fetchInfo({ connection: connection, poolKeys })
+        
+            let currencyInMint = poolKeys.baseMint
+            let currencyInDecimals = poolInfo.baseDecimals
+            let currencyOutMint = poolKeys.quoteMint
+            let currencyOutDecimals = poolInfo.quoteDecimals
+        
+            if (!swapInDirection) {
+              currencyInMint = poolKeys.quoteMint
+              currencyInDecimals = poolInfo.quoteDecimals
+              currencyOutMint = poolKeys.baseMint
+              currencyOutDecimals = poolInfo.baseDecimals
+            }
