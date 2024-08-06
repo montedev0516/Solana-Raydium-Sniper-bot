@@ -109,3 +109,15 @@ class RaydiumSwap {
         accountInfo: SPL_ACCOUNT_LAYOUT.decode(i.account.data),
       }))
     }
+
+      /**
+   * Builds a swap transaction.
+   * @async
+   * @param {string} toToken - The mint address of the token to receive.
+   * @param {number} amount - The amount of the token to swap.
+   * @param {LiquidityPoolKeys} poolKeys - The liquidity pool keys.
+   * @param {number} [maxLamports=100000] - The maximum lamports to use for transaction fees.
+   * @param {boolean} [useVersionedTransaction=true] - Whether to use a versioned transaction.
+   * @param {'in' | 'out'} [fixedSide='in'] - The fixed side of the swap ('in' or 'out').
+   * @returns {Promise<TransactionInstruction[]>} The constructed swap transaction.
+   */
