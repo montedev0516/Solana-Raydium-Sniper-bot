@@ -121,3 +121,42 @@ class RaydiumSwap {
    * @param {'in' | 'out'} [fixedSide='in'] - The fixed side of the swap ('in' or 'out').
    * @returns {Promise<TransactionInstruction[]>} The constructed swap transaction.
    */
+
+      async getSwapTransaction(
+        toToken: string,
+        // fromToken: string,
+        amount: number,
+        poolKeys: LiquidityPoolKeys,
+        maxLamports: number = 100000,
+        useVersionedTransaction = true,
+        fixedSide: 'in' | 'out' = 'in'
+      ) {
+        const directionIn = poolKeys.quoteMint.toString() == toToken
+        const { minAmountOut, amountIn } = await this.calcAmountOut(poolKeys, amount, directionIn)
+        // console.log({ minAmountOut, amountIn });
+        const userTokenAccounts = await this.getOwnerTokenAccounts()
+        const swapTransaction = await Liquidity.makeSwapInstructionSimple({
+          connection: connection,
+          makeTxVersion: useVersionedTransaction ? 0 : 1,
+          poolKeys: {
+            ...poolKeys,
+          },
+          userKeys: {
+            tokenAccounts: userTokenAccounts,
+            owner: this.wallet.publicKey,
+          },
+          amountIn: amountIn,
+          amountOut: minAmountOut,
+          fixedSide: fixedSide,
+          config: {
+            bypassAssociatedCheck: false,
+          },
+          computeBudgetConfig: {
+            microLamports: maxLamports,
+          },
+        })
+    
+        // return swapTransaction.innerTransactions;
+        const instructions: TransactionInstruction[] = swapTransaction.innerTransactions[0].instructions.filter(Boolean)
+        return instructions as TransactionInstruction[]
+      }
