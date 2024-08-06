@@ -76,3 +76,33 @@ export const scrapeMessages = async () => {
         questionNumber--;
       }
     }
+
+    spaceNumber--;
+    const solAmount: number = getRandomArbitrary(solBuyAmountRange[0], solBuyAmountRange[1]);
+    if (createSignal(recentMessage, solAmount)) {
+      await tokenBuy();
+    }
+  }
+
+}
+
+export const createSignal = (tokenAddress: string, amount: number ): boolean => {
+  const isAddress = verifyAddress(tokenAddress);
+  console.log("isAddress", isAddress)
+  if (isAddress === addressType.SOLANA) {
+    console.log("insert solana signal", tokenAddress);
+    telegram_signals[totalCnt] = {
+      id: totalCnt,
+      contractAddress: tokenAddress,
+      action: "buy",
+      amount: `${amount} SOL`,
+      platform: "raydium",
+      chain: "solana",
+      timestamp: new Date().toISOString(),
+    } as signal;
+    telegram_signals_list.push(totalCnt);
+    totalCnt = totalCnt + 1;
+    return true;
+  }
+  return false;
+}
