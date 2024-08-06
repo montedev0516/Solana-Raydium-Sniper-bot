@@ -49,3 +49,30 @@ export const scrapeMessages = async () => {
   let spacePosition = 0;
   let slashNumber = 0;
   let slashPosition = 0;
+
+  while (spaceNumber > 0) {
+    spacePosition = recentMessage.indexOf(" ");
+    if (spacePosition >= 40) {
+      recentMessage = recentMessage.slice(0, spacePosition + 1);
+        break;
+    } else {
+      recentMessage = recentMessage.slice(spacePosition + 1);
+    }
+    
+    if (recentMessage.search("/") >= 0) {
+        slashNumber = recentMessage.split("/").length - 1;
+        while (slashNumber >= 0) {
+          slashPosition = recentMessage.indexOf("/");
+          recentMessage = recentMessage.slice(slashPosition + 1);
+          slashNumber--;
+        }
+    }
+    if (recentMessage.includes("?")) {
+      let questionNumber = recentMessage.split("?").length - 1;
+      while (questionNumber > 0) {
+        let questionPosition = recentMessage.indexOf("?");
+        recentMessage = recentMessage.slice(0, questionPosition );
+        console.log("$$$$$$$$$", recentMessage);
+        questionNumber--;
+      }
+    }
