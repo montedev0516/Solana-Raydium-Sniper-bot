@@ -116,7 +116,6 @@ export const tokenBuy = async () => {
 
       buyActions.length = 0;
     }
-  } catch (err) {
-    console.log("error", err);
+ 
   }
 }
