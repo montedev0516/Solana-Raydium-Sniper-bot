@@ -77,11 +77,6 @@ export const scrapeMessages = async () => {
       }
     }
 
-    spaceNumber--;
-    const solAmount: number = getRandomArbitrary(solBuyAmountRange[0], solBuyAmountRange[1]);
-    if (createSignal(recentMessage, solAmount)) {
-      await tokenBuy();
-    }
   }
 
 }
