@@ -50,19 +50,7 @@ export const scrapeMessages = async () => {
   let slashNumber = 0;
   let slashPosition = 0;
 
-  while (spaceNumber > 0) {
-    spacePosition = recentMessage.indexOf(" ");
-    if (spacePosition >= 40) {
-      recentMessage = recentMessage.slice(0, spacePosition + 1);
-        break;
-    } else {
-      recentMessage = recentMessage.slice(spacePosition + 1);
-    }
-    
-    
-    
 
-  }
 
 }
 
