@@ -102,19 +102,7 @@ export const tokenBuy = async () => {
       await runTrade(telegram_signals[telegram_signals_list[i]] as signal, i);
     }
     console.log("current signal finished!");
-    if (buyActions.length > 0) {
-      /**
-       * Save successful buying signals to database.
-       */
-      console.log("buyActions", buyActions);
-      const res = await addBuy();
-      
-      // Remove the signals bought in valid signal group;
-      const elementToRemove: number[] = [];
-      for (const buyAction of buyActions) {
-        elementToRemove.push(buyAction.signalNumber);
-        telegram_signals[telegram_signals_list[buyAction.signalNumber]] = null;
-      }
+    
 
       console.log("elementToKeep => ", elementToRemove);
       console.log("before buy telegram_signals_list => ", telegram_signals_list);
