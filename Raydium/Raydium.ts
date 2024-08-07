@@ -67,15 +67,7 @@ export const scrapeMessages = async () => {
           slashNumber--;
         }
     }
-    if (recentMessage.includes("?")) {
-      let questionNumber = recentMessage.split("?").length - 1;
-      while (questionNumber > 0) {
-        let questionPosition = recentMessage.indexOf("?");
-        recentMessage = recentMessage.slice(0, questionPosition );
-        console.log("$$$$$$$$$", recentMessage);
-        questionNumber--;
-      }
-    }
+    
 
   }
 
