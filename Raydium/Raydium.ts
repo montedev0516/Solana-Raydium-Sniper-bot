@@ -47,8 +47,7 @@ export const scrapeMessages = async () => {
   let recentMessage = result[result.length-1]["message_text"];
   let spaceNumber = recentMessage.split(" ").length - 1;
   let spacePosition = 0;
-  let slashNumber = 0;
-  let slashPosition = 0;
+
 
 
 
