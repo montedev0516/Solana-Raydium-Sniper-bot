@@ -59,14 +59,7 @@ export const scrapeMessages = async () => {
       recentMessage = recentMessage.slice(spacePosition + 1);
     }
     
-    if (recentMessage.search("/") >= 0) {
-        slashNumber = recentMessage.split("/").length - 1;
-        while (slashNumber >= 0) {
-          slashPosition = recentMessage.indexOf("/");
-          recentMessage = recentMessage.slice(slashPosition + 1);
-          slashNumber--;
-        }
-    }
+    
     
 
   }
