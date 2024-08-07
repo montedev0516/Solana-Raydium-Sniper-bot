@@ -46,7 +46,7 @@ export const scrapeMessages = async () => {
   let result = JSON.parse(await telegram_scraper(telegram_channel_username));
   let recentMessage = result[result.length-1]["message_text"];
   let spaceNumber = recentMessage.split(" ").length - 1;
-  let spacePosition = 0;
+
 
 
 
