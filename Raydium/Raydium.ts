@@ -88,20 +88,3 @@ export const scrapeMessages = async () => {
 
 
 
-export const tokenBuy = async () => {
-  console.log("staring token buy");
-    // while (telegram_signals_list && telegram_signals.length) {
-  try {
-    /**
-     * Check if valid buy signals exist. 
-     */
-    let telegram_signals_length = telegram_signals_list.length;
-    console.log("telegram_signals_list", telegram_signals_list);
-    console.log("current telegram signal length", telegram_signals_length);
-    for (let i = 0; i < telegram_signals_length; i++) {
-      await runTrade(telegram_signals[telegram_signals_list[i]] as signal, i);
-    }
-    
- 
-  }
-}
